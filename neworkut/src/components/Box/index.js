@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const Box = styled.div`
-  background: #ffffff;
+  background: #e6e6e6;
   border-radius: 8px;
 
   padding: 16px;
@@ -52,7 +52,7 @@ const Box = styled.div`
   button {
     border: 0;
     padding: 8px 12px;
-    color: #FFFFFF;
+    color: #e6e6e6;
     border-radius: 10000px;
     background-color: #6F92BB;
   }
