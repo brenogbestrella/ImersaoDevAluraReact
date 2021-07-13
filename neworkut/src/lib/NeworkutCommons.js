@@ -19,13 +19,26 @@ function Link({ href, children, ...props }) {
 // ================================================================================================================
 // Menu
 // ================================================================================================================
+const NewOrkut = styled.div`
+  color: #6D6D6D;
+  font-size: 10px;
+  font-weight: 800;
+  position: absolute;
+  left: -80px;
+  top: 8px;
+  background-color: #FFFFFF;
+  padding: 8px;
+  border-radius: 15px;
+`
+
 export function AlurakutMenu({ githubUser }) {
   const [isMenuOpen, setMenuState] = React.useState(false);
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
-        <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
-
+        <NewOrkut >
+          <h2>Neworkut</h2>
+        </NewOrkut>
         <nav style={{ flex: 1 }}>
           {[{ name: 'Inicio', slug: '/'}, {name: 'Amigos', slug: '/amigos'}, {name: 'Comunidades', slug: '/comunidades'}].map((menuItem) => (
             <Link key={`key__${menuItem.name.toLocaleLowerCase()}`} href={`${menuItem.slug.toLocaleLowerCase()}`}>
