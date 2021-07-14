@@ -63,7 +63,7 @@ export default function Home() {
 
               const comunidade = {
                 id: new Date().toISOString(),
-                titulo: dadosDoForm.get("title"),
+                title: dadosDoForm.get("title"),
                 image: dadosDoForm.get("image")
               }
 
@@ -73,7 +73,8 @@ export default function Home() {
                 <input 
                   placeholder="Qual vai ser o nome da sua comunidade?" 
                   name="title" 
-                  aria-label="Qual vai ser o nome da sua comunidade?" 
+                  aria-label="Qual vai ser o nome da sua comunidade?"
+                  type="text" 
                 />
               </div>
               <div>
