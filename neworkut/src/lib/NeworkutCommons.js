@@ -334,18 +334,18 @@ OrkutNostalgicIconSet.List = styled.ul`
 // ================================================================================================================
 const AlurakutLoginScreen = css`
   :root {
-    --backgroundPrimary: #D9E6F6;
-    --backgroundSecondary: #F1F9FE;
-    --backgroundTertiary: #FFFFFF;
-    --backgroundQuarternary: #BBCDE8;
-    --colorPrimary: #2E7BB4;
-    --colorSecondary: #388BB0;
-    --colorTertiary: #2F4A71;
+    --backgroundPrimary: #21262d;
+    --backgroundSecondary: #21262d;
+    --backgroundTertiary: #21262d;
+    --backgroundQuarternary: #21262d;
+    --colorPrimary: #e8e6e6;
+    --colorSecondary: #21262d;
+    --colorTertiary: #21262d;
     --colorQuarternary: #D81D99;
-    --textPrimaryColor: #333333;
+    --textPrimaryColor: #e8e6e6;
     --textSecondaryColor: #FFFFFF;
-    --textTertiaryColor: #5A5A5A;
-    --textQuarternaryColor: #C5C6CA;
+    --textTertiaryColor: #FFFFFF;
+    --textQuarternaryColor: #FFFFFF;
     --commonRadius: 8px;
   }
   .loginScreen {
@@ -367,6 +367,7 @@ const AlurakutLoginScreen = css`
               "footerArea footerArea";
     }
     .logoArea {
+      color: var(--colorPrimary);
       grid-area: logoArea;
       background-color: var(--backgroundTertiary);
       border-radius: var(--commonRadius);
@@ -422,8 +423,15 @@ const AlurakutLoginScreen = css`
             min-height: 282px;
           }
         }
+        h3 {
+          font-size: 12px;
+          color: var(--colorPrimary);
+          margin-bottom: 20px;
+
+        }
         p {
           font-size: 14px;
+          color: var(--colorPrimary);
         }
         a {
           text-decoration: none;
@@ -438,6 +446,7 @@ const AlurakutLoginScreen = css`
           border-radius: var(--commonRadius);
           margin-top: 24px;
           margin-bottom: 16px;
+          color: var(--colorPrimary);
         }
         button {
           width: 100%;
@@ -445,7 +454,7 @@ const AlurakutLoginScreen = css`
           border: 0;
           padding: 12px;
           border-radius: var(--commonRadius);
-          background-color: var(--colorPrimary);
+          background-color: #2ea043; 
           color: var(--textSecondaryColor);
         }
       }
@@ -458,6 +467,7 @@ const AlurakutLoginScreen = css`
       p {
         font-size: 12px;
         text-align: center;
+        color: var(--colorPrimary);
         a {
           text-decoration: none;
           color: var(--colorPrimary);

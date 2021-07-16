@@ -1,4 +1,6 @@
 import React from "react"
+import nookies from "nookies"
+import jwt from "jsonwebtoken"
 import MainGrid from '../src/components/MainGrid'
 import Box from "../src/components/Box"
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from "../src/lib/NeworkutCommons"
@@ -28,29 +30,15 @@ function ProfileRelationsBox(propriedades) {
              <h2 className="smallTitle">
               {propriedades.title} ({propriedades.items.length})
             </h2>
-            <ul>
-              {/* {seguidores.map((itemAtual) => {
-                return (
-                  <li key={itemAtual}>
-                    <a href={`https://github.com${itemAtual}.png`}>
-                      <img src={itemAtual.image} />
-                      <span>{itemAtual.title}</span> 
-                    </a>
-                  </li>
-                )
-              })} */}
-            </ul>
     </ProfileRelationsBoxWrapper>
   )
 }
 
-export default function Home() {
-  const gitHubUser = 'brenogbestrella';
-  const [comunidades, setComunidades] = React.useState([{
-    id: "8127570723409572098476",
-    title: "Eu odeio acordar cedo",
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
-  }]);;
+export default function Home(props) {
+  const gitHubUser = props.githubUser;
+  const [comunidades, setComunidades] = React.useState([]);
+
+  
   const pessoasFavoritas = [
     "vensller", 
     "nymalone", 
@@ -69,6 +57,28 @@ export default function Home() {
     })
     .then(function(respostaCompleta) {
       setSeguidores(respostaCompleta)
+    })
+
+    fetch("https://graphql.datocms.com/", {
+      method: "POST",
+      headers: {
+        "Authorization": "3e2435964a54e2e4c51df86cea41d6",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({ "query": `query {
+        allCommunities {
+          title
+          id
+          imageUrl
+          creatorSlug
+        }
+      }`})
+    })
+    .then((response) => response.json())
+    .then((respostaCompleta) => {
+      const comunidadesVindasDoDato = respostaCompleta.data.allCommunities;
+      setComunidades(comunidadesVindasDoDato)
     })
   }, [])
 
@@ -96,12 +106,24 @@ export default function Home() {
               const dadosDoForm = new FormData(e.target);
 
               const comunidade = {
-                id: new Date().toISOString(),
                 title: dadosDoForm.get("title"),
-                image: dadosDoForm.get("image")
+                imageUrl: dadosDoForm.get("image"),
+                creatorSlug: gitHubUser,
               }
 
-              setComunidades([...comunidades , comunidade])
+              fetch("/api/comunidades", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(comunidade)
+              })
+              .then(async (res) => {
+                const dados = await res.json();
+                const comunidade = dados.registroCriado;
+                setComunidades([...comunidades , comunidade])
+              })
+
             }}>
               <div>
                 <input 
@@ -129,23 +151,6 @@ export default function Home() {
         <ProfileRelationsBox title="Seguidores" items={seguidores} />
         <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
-              Comunidades ({comunidades.length})
-            </h2>
-          <ul>
-            {comunidades.map((itemAtual) => {
-              return (
-                <li key={itemAtual.id}>
-                  <a href={`/users/${itemAtual.title}`}>
-                    <img src={itemAtual.image} />
-                    <span>{itemAtual.title}</span> 
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
-        </ProfileRelationsBoxWrapper>
-          <ProfileRelationsBoxWrapper>
-            <h2 className="smallTitle">
               Amigos ({pessoasFavoritas.length})
             </h2>
             <ul>
@@ -162,11 +167,48 @@ export default function Home() {
             })}
             </ul>
           </ProfileRelationsBoxWrapper>
-          {/* <Box>
-            Comunidades
-          </Box> */}
+        <ProfileRelationsBoxWrapper>
+            <h2 className="smallTitle">
+              Comunidades ({comunidades.length})
+            </h2>
+          <ul>
+            {comunidades.map((itemAtual) => {
+              return (
+                <li key={itemAtual.id}>
+                  <a href={`/communities/${itemAtual.id}`}>
+                    <img src={itemAtual.imageUrl} />
+                    <span>{itemAtual.title}</span> 
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
+        </ProfileRelationsBoxWrapper>
+          
         </div>
       </MainGrid>
     </>
     )
+}
+
+export async function getServerSideProps(context) {
+  const cookies = nookies.get(context)
+  const token = cookies.USER_TOKEN
+  const decodedToken = jwt.decode(token);
+  const githubUser = decodedToken?.githubUser
+
+  if(!githubUser) {
+    return { 
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      githubUser
+    }
+  }
 }
