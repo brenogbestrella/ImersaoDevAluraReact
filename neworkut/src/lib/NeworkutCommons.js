@@ -19,13 +19,26 @@ function Link({ href, children, ...props }) {
 // ================================================================================================================
 // Menu
 // ================================================================================================================
+const NewOrkut = styled.div`
+  color: #6D6D6D;
+  font-size: 10px;
+  font-weight: 800;
+  position: absolute;
+  left: -80px;
+  top: 8px;
+  background-color: #FFFFFF;
+  padding: 8px;
+  border-radius: 15px;
+`
+
 export function AlurakutMenu({ githubUser }) {
   const [isMenuOpen, setMenuState] = React.useState(false);
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
-        <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
-
+        <NewOrkut >
+          <h2>Neworkut</h2>
+        </NewOrkut>
         <nav style={{ flex: 1 }}>
           {[{ name: 'Inicio', slug: '/'}, {name: 'Amigos', slug: '/amigos'}, {name: 'Comunidades', slug: '/comunidades'}].map((menuItem) => (
             <Link key={`key__${menuItem.name.toLocaleLowerCase()}`} href={`${menuItem.slug.toLocaleLowerCase()}`}>
@@ -162,11 +175,12 @@ AlurakutMenu.Logo = styled.img`
   height: 34px;
 `;
 
-function AlurakutMenuProfileSidebar({ githubUser }) {
+function AlurakutMenuProfileSidebar() {
+  const githubUser = 'brenogbestrella';
   return (
     <div className="alurakutMenuProfileSidebar">
       <div>
-        <img src={`https://github.com/${githubUser}.png`} style={{ borderRadius: '8px' }} />
+        <img src={`https://github.com/${githubUser}.png`} style={{ borderRadius: '8px'}} />
         <hr />
         <p>
           <a className="boxLink" href={`/user/${githubUser}`}>
@@ -320,18 +334,18 @@ OrkutNostalgicIconSet.List = styled.ul`
 // ================================================================================================================
 const AlurakutLoginScreen = css`
   :root {
-    --backgroundPrimary: #D9E6F6;
-    --backgroundSecondary: #F1F9FE;
-    --backgroundTertiary: #FFFFFF;
-    --backgroundQuarternary: #BBCDE8;
-    --colorPrimary: #2E7BB4;
-    --colorSecondary: #388BB0;
-    --colorTertiary: #2F4A71;
+    --backgroundPrimary: #21262d;
+    --backgroundSecondary: #21262d;
+    --backgroundTertiary: #21262d;
+    --backgroundQuarternary: #21262d;
+    --colorPrimary: #e8e6e6;
+    --colorSecondary: #21262d;
+    --colorTertiary: #21262d;
     --colorQuarternary: #D81D99;
-    --textPrimaryColor: #333333;
+    --textPrimaryColor: #e8e6e6;
     --textSecondaryColor: #FFFFFF;
-    --textTertiaryColor: #5A5A5A;
-    --textQuarternaryColor: #C5C6CA;
+    --textTertiaryColor: #FFFFFF;
+    --textQuarternaryColor: #FFFFFF;
     --commonRadius: 8px;
   }
   .loginScreen {
@@ -353,6 +367,7 @@ const AlurakutLoginScreen = css`
               "footerArea footerArea";
     }
     .logoArea {
+      color: var(--colorPrimary);
       grid-area: logoArea;
       background-color: var(--backgroundTertiary);
       border-radius: var(--commonRadius);
@@ -408,8 +423,15 @@ const AlurakutLoginScreen = css`
             min-height: 282px;
           }
         }
+        h3 {
+          font-size: 12px;
+          color: var(--colorPrimary);
+          margin-bottom: 20px;
+
+        }
         p {
           font-size: 14px;
+          color: var(--colorPrimary);
         }
         a {
           text-decoration: none;
@@ -424,6 +446,7 @@ const AlurakutLoginScreen = css`
           border-radius: var(--commonRadius);
           margin-top: 24px;
           margin-bottom: 16px;
+          color: var(--colorPrimary);
         }
         button {
           width: 100%;
@@ -431,7 +454,7 @@ const AlurakutLoginScreen = css`
           border: 0;
           padding: 12px;
           border-radius: var(--commonRadius);
-          background-color: var(--colorPrimary);
+          background-color: #2ea043; 
           color: var(--textSecondaryColor);
         }
       }
@@ -444,6 +467,7 @@ const AlurakutLoginScreen = css`
       p {
         font-size: 12px;
         text-align: center;
+        color: var(--colorPrimary);
         a {
           text-decoration: none;
           color: var(--colorPrimary);
